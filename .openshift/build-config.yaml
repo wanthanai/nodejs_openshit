@@ -2,6 +2,7 @@ apiVersion: build.openshift.io/v1
 kind: BuildConfig
 metadata:
   name: nodejs-build
+spec:
   source:
     type: Git
     git:
@@ -9,10 +10,11 @@ metadata:
       ref: 'dev'  # This points to the 'dev' branch
   strategy:
     type: Docker
+    dockerStrategy: {}  # Specify the dockerStrategy for a Docker build
   output:
     to:
       kind: ImageStreamTag
-      name: 'nodejs-app:latest'
+      name: 'nodejs-app:latest'  # Make sure this matches the ImageStream
   triggers:
     - type: GitHub
       github:
