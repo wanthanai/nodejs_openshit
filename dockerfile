@@ -1,20 +1,20 @@
-# ใช้ base image ที่เหมาะสม
-FROM node:14
+# Use the official Node.js image as a base image
+FROM node:16
 
-# ตั้งค่า working directory
+# Create and set the working directory
 WORKDIR /app
 
-# คัดลอกไฟล์ package.json และ package-lock.json
+# Copy package.json and package-lock.json
 COPY package*.json ./
 
-# ติดตั้ง dependencies
+# Install dependencies
 RUN npm install
 
-# คัดลอกโค้ดทั้งหมดไปที่ working directory
+# Copy the rest of the application code
 COPY . .
 
-# ตั้งค่า port ที่ container จะเปิด
+# Expose the port the app runs on
 EXPOSE 8080
 
-# รันแอพพลิเคชั่น
-CMD ["node", "server.js"]
+# Define the command to run the app
+CMD ["npm", "start"]

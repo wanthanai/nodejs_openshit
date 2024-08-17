@@ -3,21 +3,67 @@ kind: Pipeline
 metadata:
   name: nodejs-pipeline
 spec:
+  params:
+    - name: git-url
+      description: The URL of the Git repository
+      type: string
+      default: https://github.com/wanthanai/nodejs_openshit.git
+    - name: git-revision
+      description: The Git revision to checkout
+      type: string
+      default: dev
+    - name: image
+      description: The Docker image name and tag (e.g., docker.io/wanthanai/my-nodejs-app:latest)
+      type: string
+      default: docker.io/wanthanai/my-nodejs-app:latest
+    - name: chart-path
+      description: Path to the Helm chart directory
+      type: string
+      default: ./nodejs-chart
+    - name: namespace
+      description: Namespace to deploy the application
+      type: string
+      default: wanthanai-dev
+  workspaces:
+    - name: shared-workspace
   tasks:
-    - name: build
+    - name: fetch-repo
       taskRef:
-        name: buildah
-      resources:
-        inputs:
-          - name: source
-            resourceRef:
-              name: git-repo
-        outputs:
-          - name: image
-            resourceRef:
-              name: image-repo
+        name: git-clone
       params:
-        - name: image
-          value: $(resources.outputs.image.url)
-        - name: context
-          value: /workspace/source
+        - name: url
+          value: $(params.git-url)
+        - name: revision
+          value: $(params.git-revision)
+      workspaces:
+        - name: output
+          workspace: shared-workspace
+    - name: build-image
+      taskRef:
+        name: build-task
+      params:
+        - name: IMAGE
+          value: $(params.image)
+      workspaces:
+        - name: source
+          workspace: shared-workspace
+    - name: push-image
+      taskRef:
+        name: push-task
+      params:
+        - name: IMAGE
+          value: $(params.image)
+      workspaces:
+        - name: source
+          workspace: shared-workspace
+    - name: deploy-using-helm
+      taskRef:
+        name: helm-deploy-task
+      params:
+        - name: CHART
+          value: $(params.chart-path)
+        - name: NAMESPACE
+          value: $(params.namespace)
+      workspaces:
+        - name: source
+          workspace: shared-workspace

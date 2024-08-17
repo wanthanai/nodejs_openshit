@@ -9,7 +9,7 @@ spec:
   - name: git-url
     value: https://github.com/wanthanai/nodejs_openshit.git
   - name: git-revision
-    value: main
+    value: dev
   - name: image
     value: docker.io/wanthanai/my-nodejs-app:latest
   - name: chart-path
@@ -18,5 +18,4 @@ spec:
     value: wanthanai-dev
   workspaces:
   - name: shared-workspace
-    persistentVolumeClaim:
-      claimName: <your-pvc-name> # Update with your PVC name if using a PVC, or remove this if using ephemeral workspaces
+    emptyDir: {}

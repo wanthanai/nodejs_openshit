@@ -1,16 +1,16 @@
 apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
-  name: build-task
+  name: push-task
 spec:
   params:
   - name: IMAGE
-    description: The Docker image name to build
+    description: The image name and tag to push
     type: string
   workspaces:
   - name: shared-workspace
   steps:
-  - name: build
+  - name: push
     image: gcr.io/kaniko-project/executor:latest
     script: |
       #!/bin/sh

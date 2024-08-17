@@ -1,0 +1,21 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: helm-deploy-task
+spec:
+  params:
+  - name: CHART
+    description: Path to the Helm chart
+    type: string
+  - name: NAMESPACE
+    description: Namespace to deploy the Helm chart
+    type: string
+  workspaces:
+  - name: shared-workspace
+  steps:
+  - name: deploy
+    image: bitnami/helm:3.8.0
+    script: |
+      #!/bin/sh
+      set -e
+      helm upgrade --install my-app /workspace/shared-workspace/$(params.CHART) --namespace $(params.NAMESPACE)

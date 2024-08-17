@@ -7,5 +7,3 @@ spec:
   params:
     - name: url
       value: https://github.com/wanthanai/nodejs_openshit.git
-    - name: revision
-      value: dev

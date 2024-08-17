@@ -6,4 +6,4 @@ spec:
   type: image
   params:
     - name: url
-      value: image-registry.openshift-image-registry.svc:5000/wanthanai-dev/nodejs-app
+      value: docker.io/wanthanai/my-nodejs-app

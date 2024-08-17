@@ -1,0 +1,16 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: build-kaniko
+spec:
+  params:
+    - name: IMAGE
+      type: string
+      description: The image name and tag (e.g., docker.io/wanthanai/my-nodejs-app:latest)
+  workspaces:
+    - name: source
+  steps:
+    - name: build
+      image: gcr.io/kaniko-project/executor:latest
+      script: |
+        /kaniko/executor --context=/workspace/source --dockerfile=/workspace/source/Dockerfile --destination=$(params.IMAGE)
