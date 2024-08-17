@@ -5,8 +5,12 @@ metadata:
 spec:
   pipelineRef:
     name: nodejs-pipeline
-  params:
-    - name: repo-url
-      value: 'https://github.com/wanthanai/nodejs_openshit.git'
-    - name: image-name
-      value: 'image-registry.openshift-image-registry.svc:5000/wanthanai-dev/nodejs-app'
+  resources:
+    inputs:
+      - name: source
+        resourceRef:
+          name: git-repo
+    outputs:
+      - name: image
+        resourceRef:
+          name: image-repo

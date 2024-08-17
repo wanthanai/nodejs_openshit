@@ -6,19 +6,18 @@ spec:
   tasks:
     - name: build
       taskRef:
-        name: build-task
-      runAfter:
-        - test
+        name: buildah
+      resources:
+        inputs:
+          - name: source
+            resourceRef:
+              name: git-repo
+        outputs:
+          - name: image
+            resourceRef:
+              name: image-repo
       params:
-        - name: image-name
-          value: 'image-registry.openshift-image-registry.svc:5000/wanthanai-dev/nodejs-app'
-
-    - name: test
-      taskRef:
-        name: test-task
-
-    - name: deploy
-      taskRef:
-        name: deploy-task
-      runAfter:
-        - build
+        - name: image
+          value: $(resources.outputs.image.url)
+        - name: context
+          value: /workspace/source

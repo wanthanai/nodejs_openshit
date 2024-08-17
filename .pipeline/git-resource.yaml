@@ -6,4 +6,6 @@ spec:
   type: git
   params:
     - name: url
-      value: 'https://github.com/wanthanai/nodejs_openshit.git'
+      value: https://github.com/wanthanai/nodejs_openshit.git
+    - name: revision
+      value: dev

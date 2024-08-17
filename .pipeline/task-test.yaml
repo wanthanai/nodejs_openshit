@@ -1,0 +1,12 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: test-task
+spec:
+  steps:
+    - name: test
+      image: node:14
+      workingDir: /workspace/source
+      script: |
+        npm install
+        npm test
