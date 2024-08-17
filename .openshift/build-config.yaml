@@ -1,0 +1,19 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: nodejs-build
+  source:
+    type: Git
+    git:
+      uri: 'https://github.com/wanthanai/nodejs_openshit.git'
+      ref: 'dev'  # This points to the 'dev' branch
+  strategy:
+    type: Docker
+  output:
+    to:
+      kind: ImageStreamTag
+      name: 'nodejs-app:latest'
+  triggers:
+    - type: GitHub
+      github:
+        secret: '7871256137d12d2bde1c9b8c53c03fe6'
