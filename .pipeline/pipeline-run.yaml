@@ -1,0 +1,12 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  name: nodejs-pipeline-run
+spec:
+  pipelineRef:
+    name: nodejs-pipeline
+  params:
+    - name: repo-url
+      value: 'https://github.com/wanthanai/nodejs_openshit.git'
+    - name: image-name
+      value: 'image-registry.openshift-image-registry.svc:5000/wanthanai-dev/nodejs-app'

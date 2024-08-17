@@ -1,0 +1,12 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: build-task
+spec:
+  steps:
+    - name: build
+      image: 'docker:19.03'
+      script: |
+        #!/bin/bash
+        set -e
+        docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .

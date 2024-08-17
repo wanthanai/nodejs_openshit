@@ -1,0 +1,24 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: nodejs-pipeline
+spec:
+  tasks:
+    - name: build
+      taskRef:
+        name: build-task
+      runAfter:
+        - test
+      params:
+        - name: image-name
+          value: 'image-registry.openshift-image-registry.svc:5000/wanthanai-dev/nodejs-app'
+
+    - name: test
+      taskRef:
+        name: test-task
+
+    - name: deploy
+      taskRef:
+        name: deploy-task
+      runAfter:
+        - build
