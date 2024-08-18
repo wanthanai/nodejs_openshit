@@ -1,0 +1,10 @@
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: TriggerBinding
+metadata:
+  name: nodejs-trigger-binding
+spec:
+  params:
+    - name: git-repo
+      value: $(body.repository.url)
+    - name: git-revision
+      value: $(body.head_commit.id)

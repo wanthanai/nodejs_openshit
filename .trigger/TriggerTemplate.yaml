@@ -1,0 +1,25 @@
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: TriggerTemplate
+metadata:
+  name: nodejs-pipeline-template
+spec:
+  params:
+    - name: git-revision
+      description: The Git revision to be used
+      default: ""
+    - name: git-repo
+      description: The Git repository URL
+      default: "https://github.com/wanthanai/nodejs_openshit.git"
+  resourcetemplates:
+    - apiVersion: tekton.dev/v1
+      kind: PipelineRun
+      metadata:
+        generateName: nodejs-pipeline-run-
+      spec:
+        pipelineRef:
+          name: nodejs-openshit-git
+        params:
+          - name: GIT_REPO
+            value: $(params.git-repo)
+          - name: GIT_REVISION
+            value: $(params.git-revision)
